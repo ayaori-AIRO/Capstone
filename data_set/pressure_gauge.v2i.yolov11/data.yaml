@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 6
+names: ['base', 'circle_plate', 'maximum', 'minimum', 'number', 'tip']
+
+roboflow:
+  workspace: viscomp1
+  project: pressure-gauge-pfjl2-k9vnd
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/viscomp1/pressure-gauge-pfjl2-k9vnd/dataset/2

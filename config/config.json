@@ -1,0 +1,9 @@
+{
+    "model_path": "/home/ayaori/Capstone/runs/detect/Capstone_test/fire_extinguisher/weights/best.pt",
+    "camera_index_1": 2,
+    "camera_index_2": 4,
+    "width": 1280,
+    "height": 720,
+    "fps": 30,
+    "confidence": 0.5
+}
