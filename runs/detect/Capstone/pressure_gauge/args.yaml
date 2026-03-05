@@ -1,7 +1,7 @@
 task: detect
 mode: train
 model: yolo11n.pt
-data: /home/ayaori/Capstone/data_set/pressure_gauge.v2i.yolov11/data.yaml
+data: /home/ayaori/Capstone/data_set/FireExtinguisher_gauge.v2i.yolov11/data.yaml
 epochs: 100
 time: null
 patience: 100

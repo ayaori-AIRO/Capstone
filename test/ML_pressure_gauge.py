@@ -8,7 +8,7 @@ def main():
         print("GPU:", torch.cuda.get_device_name(0))
 
     # 데이터셋 경로
-    data_yaml = "/home/ayaori/Capstone/data_set/pressure_gauge.v2i.yolov11/data.yaml"
+    data_yaml = "/home/ayaori/Capstone/data_set/FireExtinguisher_gauge.v2i.yolov11/data.yaml"
 
     # YOLOv11 nano 모델 로드 (가볍고 실시간에 좋음)
     model = YOLO("yolo11n.pt")

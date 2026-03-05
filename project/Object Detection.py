@@ -12,16 +12,22 @@ config_path = os.path.join(BASE_DIR, "config", "config.json")
 with open(config_path, "r") as f:
     config = json.load(f)
 
-model_path = config["model_path"]
-camera_index_1 = config["camera_index_1"]   # 첫 번째 카메라
-camera_index_2 = config["camera_index_2"]   # 두 번째 카메라
+FireExtinguisher_model_path = config["FireExtinguisher_model_path"]
+pressure_gauge_model_path = config["pressure_gauge_model_path"]
+label_model_path = config["label_model_path"]
+camera_index_1 = config["camera_index_1"]
+camera_index_2 = config["camera_index_2"]
 width = config["width"]
 height = config["height"]
 fps = config["fps"]
 confidence = config["confidence"]
 
-# 🔥 모델 로드
-model = YOLO(model_path)
+# 🔥 모델 로드 (딕셔너리로 관리)
+models = {
+    "소화기": YOLO(FireExtinguisher_model_path),
+    "압력게이지": YOLO(pressure_gauge_model_path),
+    "라벨": YOLO(label_model_path)
+}
 
 # 🔥 카메라 설정
 cap1 = cv2.VideoCapture(camera_index_1, cv2.CAP_V4L2)
@@ -38,14 +44,13 @@ if not cap1.isOpened() or not cap2.isOpened():
     print("❌ 카메라 열기 실패")
     exit()
 
-print("✅ YOLO11 소화기 탐지 시작")
+print("✅ YOLO11 세 모델 탐지 시작")
 
 cv2.namedWindow("Camera 1", cv2.WINDOW_NORMAL)
 cv2.namedWindow("Camera 2", cv2.WINDOW_NORMAL)
 
 while True:
-
-    # 🔥 오래된 프레임 버리기 (지연 최소화)
+    # 🔥 오래된 프레임 버리기
     cap1.grab()
     cap2.grab()
 
@@ -56,43 +61,38 @@ while True:
         print("❌ 프레임 읽기 실패")
         break
 
-    # -----------------------------
-    # 🔥 YOLO 추론 (각각 수행)
-    # -----------------------------
-    results1 = model(frame1, imgsz=640, conf=confidence, verbose=False)
-    results2 = model(frame2, imgsz=640, conf=confidence, verbose=False)
+    frames = [frame1, frame2]
+    annotated_frames = []
 
-    # -----------------------------
-    # 🔥 85% 이상만 콘솔 출력
-    # -----------------------------
-    for i, results in enumerate([results1, results2]):
-        for box in results[0].boxes:
-            conf_score = float(box.conf[0])
-            cls_id = int(box.cls[0])
-            class_name = model.names[cls_id]
+    for i, frame in enumerate(frames):
+        annotated = frame.copy()
+        # 🔥 각 모델별 추론
+        for name, model in models.items():
+            results = model(frame, imgsz=640, conf=confidence, verbose=False)
+            for box in results[0].boxes:
+                conf_score = float(box.conf[0])
+                cls_id = int(box.cls[0])
+                class_name = model.names[cls_id]
 
-            if conf_score >= 0.85:
-                x1, y1, x2, y2 = map(int, box.xyxy[0])
-                print(f"🔥 Camera {i+1} | {class_name} 감지 | 확률: {conf_score:.2f} | 좌표: ({x1},{y1})~({x2},{y2})")
+                if conf_score >= 0.85:
+                    x1, y1, x2, y2 = map(int, box.xyxy[0])
+                    print(f"🔥 Camera {i+1} | {name} {class_name} 감지 | 확률: {conf_score:.2f} | 좌표: ({x1},{y1})~({x2},{y2})")
+            # 🔥 시각화
+            annotated = results[0].plot(img=annotated)
 
-    # -----------------------------
-    # 🔥 결과 시각화
-    # -----------------------------
-    annotated_frame1 = results1[0].plot()
-    annotated_frame2 = results2[0].plot()
+        annotated_frames.append(annotated)
 
-    cv2.imshow("Camera 1", annotated_frame1)
-    cv2.imshow("Camera 2", annotated_frame2)
+    cv2.imshow("Camera 1", annotated_frames[0])
+    cv2.imshow("Camera 2", annotated_frames[1])
 
     # ESC 종료
     if cv2.waitKey(1) & 0xFF == 27:
         break
 
 # -----------------------------
-# 5️⃣ 종료
+# 종료
 # -----------------------------
 cap1.release()
 cap2.release()
 cv2.destroyAllWindows()
-
 print("🛑 프로그램 종료")
