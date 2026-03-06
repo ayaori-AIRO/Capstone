@@ -3,7 +3,8 @@ from scservo_sdk import sms_sts, PortHandler
 # ==============================
 # Configuration
 # ==============================
-SERIAL_PORT = "COM5"
+#SERIAL_PORT = "COM5" #연결된 시리얼 포트 (Window)
+SERIAL_PORT = "/dev/ttyUSB0"     # 연결된 시리얼 포트 (Ubuntu)
 BAUDRATE = 1000000
 SERVO_ID = 1
 

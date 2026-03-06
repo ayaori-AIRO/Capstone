@@ -5,7 +5,8 @@ from scservo_sdk import PortHandler, sms_sts
 # 기본 설정
 # ==============================
 
-SERIAL_PORT = "COM5"     # 연결된 시리얼 포트
+#SERIAL_PORT = "COM5"     # 연결된 시리얼 포트 (Window)
+SERIAL_PORT = "/dev/ttyUSB0"     # 연결된 시리얼 포트 (Ubuntu)
 BAUDRATE = 1000000      # ST3235 기본 보드레이트
 SERVO_ID = 1            # 서보 ID
 
@@ -90,7 +91,7 @@ time.sleep(1)
 # 이동 설정
 # ==============================
 
-goal_position = 2048     # 0= 0° / 1024= 90° / 2048= 180° (중심) / 3072= 270° / 4095= 360°     
+goal_position = 1024    # 0= 0° / 1024= 90° / 2048= 180° (중심) / 3072= 270° / 4095= 360°     
 move_speed = 1500        # 이동 속도
 move_acc = 50            # 가속도
 
