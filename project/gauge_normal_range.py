@@ -102,7 +102,9 @@ if intersection_point is not None:
     print("Red check at:", (x, y_check), "BGR:", b, g, r)
     if r > 130 and r > g + 13 and r > b + 13:
         is_red = True
-print("Red needle detected:", is_red)
+        print("Red needle detected:", is_red)
+    else :
+        print("Red tick mark ❌")
 
 # ================================
 # 🔵 정상 범위 초록색 여부 확인 (intersection_point 기준)
