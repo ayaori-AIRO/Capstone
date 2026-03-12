@@ -6,21 +6,29 @@ from ultralytics import YOLO
 # 🔥 현재 파일 기준 상위 폴더 경로 얻기
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# 🔥 config.json 경로
-config_path = os.path.join(BASE_DIR, "config", "config.json")
+# 🔥 모델, 카메라 config 경로
+model_config_path = os.path.join(BASE_DIR, "config", "model_config.json")
+camera_config_path = os.path.join(BASE_DIR, "config", "camera_config.json")
 
-with open(config_path, "r") as f:
-    config = json.load(f)
+# 🔥 모델 설정 불러오기
+with open(model_config_path, "r") as f:
+    model_config = json.load(f)
 
-FireExtinguisher_model_path = config["FireExtinguisher_model_path"]
-pressure_gauge_model_path = config["pressure_gauge_model_path"]
-label_model_path = config["label_model_path"]
-camera_index_1 = config["camera_index_1"]
-camera_index_2 = config["camera_index_2"]
-width = config["width"]
-height = config["height"]
-fps = config["fps"]
-confidence = config["confidence"]
+FireExtinguisher_model_path = model_config["FireExtinguisher_model_path"]
+pressure_gauge_model_path = model_config["pressure_gauge_model_path"]
+label_model_path = model_config["label_model_path"]
+gauge_crop_image_path = model_config["gauge_crop_image_path"]
+
+# 🔥 카메라 설정 불러오기
+with open(camera_config_path, "r") as f:
+    camera_config = json.load(f)
+
+camera_index_1 = camera_config["camera_index_1"]
+camera_index_2 = camera_config["camera_index_2"]
+width = camera_config["width"]
+height = camera_config["height"]
+fps = camera_config["fps"]
+confidence = camera_config["confidence"]
 
 # 🔥 모델 로드 (딕셔너리로 관리)
 models = {

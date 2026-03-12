@@ -6,16 +6,16 @@ import json
 # 🔥 현재 파일 기준 상위 폴더 경로 얻기
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# 🔥 config.json 경로
-config_path = os.path.join(BASE_DIR, "config", "config.json")
+# 🔥 model_config.json 경로
+model_config_path = os.path.join(BASE_DIR, "config", "model_config.json")
 
-with open(config_path, "r") as f:
-    config = json.load(f)
+with open(model_config_path, "r") as f:
+    model_config = json.load(f)
 
 # ================================
 # 1️⃣ 이미지 읽기
 # ================================
-gauge_crop_image_path = config["gauge_crop_image_path"]
+gauge_crop_image_path = model_config["gauge_crop_image_path"]
 gauge_img = cv2.imread(gauge_crop_image_path)
 h, w = gauge_img.shape[:2]
 
@@ -103,7 +103,7 @@ if intersection_point is not None:
     if r > 130 and r > g + 13 and r > b + 13:
         is_red = True
         print("Red needle detected:", is_red)
-    else :
+    else:
         print("Red tick mark ❌")
 
 # ================================

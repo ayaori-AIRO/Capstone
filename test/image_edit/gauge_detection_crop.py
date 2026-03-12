@@ -3,7 +3,7 @@ import cv2
 import os
 
 # 입력/저장 경로
-img_path = "/home/ayaori/Capstone/capture/gauge.jpg"
+img_path = "/home/ayaori/Capstone/capture/FireExtinguisher_up.jpg"
 save_dir = "/home/ayaori/Capstone/capture"
 os.makedirs(save_dir, exist_ok=True)
 

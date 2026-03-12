@@ -2,11 +2,5 @@
     "FireExtinguisher_model_path": "/home/ayaori/Capstone/runs/detect/Capstone/fire_extinguisher/weights/best.pt",
     "pressure_gauge_model_path": "/home/ayaori/Capstone/runs/detect/Capstone/pressure_gauge/weights/best.pt",
     "label_model_path": "/home/ayaori/Capstone/runs/detect/Capstone/label/weights/best.pt",
-    "gauge_crop_image_path": "/home/ayaori/Capstone/capture/gauge_crop.jpg",
-    "camera_index_1": 2,
-    "camera_index_2": 2,
-    "width": 1280,
-    "height": 720,
-    "fps": 30,
-    "confidence": 0.5
+    "gauge_crop_image_path": "/home/ayaori/Capstone/capture/gauge_crop.jpg"
 }
