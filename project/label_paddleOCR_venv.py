@@ -3,10 +3,10 @@ import subprocess
 import sys
 
 # 1️⃣ 가상환경 Python 경로
-venv_python = "/home/ayaori/Capstone/paddle_cpu_env/bin/python"
+venv_python = "/home/ayaori/paddle_cpu_env/bin/python"
 
 # 2️⃣ PaddleOCR 스크립트 경로
-script_path = "/home/ayaori/Capstone/test/label_paddleOCR.py"
+script_path = "/home/ayaori/Capstone/project/label_paddleOCR.py"
 
 # 3️⃣ 테스트용 이미지
 img_path = "/home/ayaori/Capstone/capture/label_crop.jpg"
