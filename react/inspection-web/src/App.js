@@ -30,22 +30,135 @@ function App() {
   const renderTabContent = () => {
     switch (activeTab) {
       case "home":
-        return (
-          <div className="tab-content">
-            <h2>Home</h2>
-            <p>소화기 점검 시스템 메인 화면</p>
-            <div className="home-card-grid">
-              <div className="home-card">총 소화기 : 3대</div>
-              <div className="home-card">정상 : 2대</div>
-              <div className="home-card">불량 : 1대</div>
+  return (
+    <div
+      className="tab-content"
+      style={{
+        display: "flex",
+        gap: "10px",
+        height: "100%",
+        alignItems: "stretch"
+      }}
+    >
+      {/* 🔵 왼쪽 카드 */}
+      <div
+        className="home-card-grid"
+        style={{ alignSelf: "flex-start" }}
+      >
+        <div className="home-card">총 소화기 : 3대</div>
+        <div className="home-card">정상 : 2대</div>
+        <div className="home-card">불량 : 1대</div>
+      </div>
+
+      {/* 🟢 가운데 여백 */}
+      <div style={{ flex: 1 }} />
+
+      {/* 🔴 오른쪽 전체 영역 */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "140px",
+          height: "100%",
+          justifyContent: "space-between"
+        }}
+      >
+        {/* ───── 위: 개별 검사 박스 ───── */}
+        <div>
+          {/* 제목 */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              borderTop: "2px solid #444",
+              borderLeft: "2px solid #444",
+              borderRight: "2px solid #444",
+              padding: "4px 8px",
+              borderTopLeftRadius: "8px",
+              borderTopRightRadius: "8px",
+              fontWeight: 600
+            }}
+          >
+            개별 검사
+          </div>
+
+          {/* 버튼 영역 */}
+          <div
+            style={{
+              borderLeft: "2px solid #444",
+              borderRight: "2px solid #444",
+              borderBottom: "2px solid #444",
+              borderBottomLeftRadius: "8px",
+              borderBottomRightRadius: "8px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              padding: "12px"
+            }}
+          >
+            <button>ID : 1</button>
+            <button>ID : 2</button>
+            <button>ID : 3</button>
+
+            {/* 구분선 */}
+            <div
+              style={{
+                height: "1px",
+                background: "#444",
+                margin: "6px 0"
+              }}
+            />
+
+            {/* ───── 아래: 검사 복귀 영역 ───── */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <div
+                style={{
+                  textAlign: "center",
+                  fontWeight: 600
+                }}
+              >
+                검사 · 복귀
+              </div>
+
+              {/* 🔵 추가 버튼 2개 */}
+              <div style={{ marginTop: "10px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                <button
+                  style={{
+                    backgroundColor: "#007bff",
+                    color: "#fff",
+                    padding: "6px",
+                    border: "none",
+                    borderRadius: "4px",
+                    cursor: "pointer"
+                  }}
+                >
+                  홈 위치
+                </button>
+
+                <button
+                  style={{
+                    backgroundColor: "#28a745",
+                    color: "#fff",
+                    padding: "6px",
+                    border: "none",
+                    borderRadius: "4px",
+                    cursor: "pointer"
+                  }}
+                >
+                  검사 실행
+                </button>
+              </div>
             </div>
           </div>
-        );
+        </div>
+      </div>
+    </div>
+  );
 
       case "id1":
         return (
           <div className="tab-content">
-            <h2>ID : 1</h2>
             <p>1번 소화기 상세 정보</p>
             <div className="detail-box">
               <div>위치 : B1F 복도 A</div>
@@ -59,7 +172,6 @@ function App() {
       case "id2":
         return (
           <div className="tab-content">
-            <h2>ID : 2</h2>
             <p>2번 소화기 상세 정보</p>
             <div className="detail-box">
               <div>위치 : B1F 복도 B</div>
@@ -73,7 +185,6 @@ function App() {
       case "id3":
         return (
           <div className="tab-content">
-            <h2>ID : 3</h2>
             <p>3번 소화기 상세 정보</p>
             <div className="detail-box">
               <div>위치 : B1F 비상구 앞</div>
