@@ -1,0 +1,211 @@
+body {
+  margin: 0;
+  background-color: #f3f5f7;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 95%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: left;
+  color: #222;
+  margin-bottom: 20px;
+  margin-top: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.content-row {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* 맵 영역 */
+.map-section {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.map-section h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.map-image {
+  width: 100%;
+  height: 700px;
+  object-fit: contain;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* 세부 내용 영역 */
+.right-section {
+  flex: 1.3;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.extra-section {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  min-height: 0;
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.tab-header {
+  display: flex;
+  gap: 6px;
+  padding-left: 8px;
+  margin-bottom: 0;
+}
+
+.tab-button {
+  border: none;
+  background: #d9dde3;
+  color: #444;
+  padding: 12px 22px;
+  border-radius: 12px 12px 0 0;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+  top: 8px;
+  transition: 0.2s;
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.08);
+}
+
+
+.tab-button:hover {
+  background: #cfd5dc;
+}
+
+.tab-button.active {
+  background: white;
+  color: #222;
+  top: 0;
+  z-index: 2;
+}
+
+.tab-body {
+  flex: 1;
+  background: white;
+  border: 1px solid #d8dde5;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.tab-content h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+.tab-content p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.home-card-grid {
+  display: flex;
+  gap: 16px;
+}
+
+.home-card {
+  flex: 1;
+  background: #f3f5f7;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.detail-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-box div {
+  background: #f3f5f7;
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+/* 검사 결과 영역 */
+.table-section {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  flex: 0.7;
+  min-height: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.table-section h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.inspection-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.inspection-table th,
+.inspection-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.inspection-table th {
+  background-color: #2f4050;
+  color: white;
+}
+
+.inspection-table tr:nth-child(even) {
+  background-color: #f8f8f8;
+}
+
+.inspection-table tr:hover {
+  background-color: #eef5ff;
+}
+
+.result-pass {
+  color: green;
+  font-weight: bold;
+}
+
+.result-fail {
+  color: red;
+  font-weight: bold;
+}
