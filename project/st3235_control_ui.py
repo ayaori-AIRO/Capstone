@@ -1,11 +1,16 @@
 import tkinter as tk
-from scservo_sdk import PortHandler, sms_sts
 import json
 import os
+import sys
 import time
 
-# 🔥 설정 파일 로드
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
+
+from scservo_sdk import PortHandler, sms_sts
+
+# 🔥 설정 파일 로드
 config_path = os.path.join(BASE_DIR, "config", "st3235_config.json")
 
 with open(config_path, "r") as f:
