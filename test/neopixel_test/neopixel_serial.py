@@ -1,3 +1,4 @@
+# python3 test/neopixel_test/neopixel_serial.py --port /dev/ttyACM0
 import argparse
 import time
 

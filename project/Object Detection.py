@@ -76,7 +76,7 @@ while True:
         annotated = frame.copy()
         # 🔥 각 모델별 추론
         for name, model in models.items():
-            results = model(frame, imgsz=640, conf=confidence, verbose=False)
+            results = model(frame, imgsz=640, conf=confidence, verbose=False, device=0)
             for box in results[0].boxes:
                 conf_score = float(box.conf[0])
                 cls_id = int(box.cls[0])
