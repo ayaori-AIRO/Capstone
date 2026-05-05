@@ -238,6 +238,12 @@ def recognize_crops(rec_session, crops, characters):
     return rows
 
 
+def get_onnx_providers():
+    available = ort.get_available_providers()
+    preferred = ["CUDAExecutionProvider", "CPUExecutionProvider"]
+    return [provider for provider in preferred if provider in available]
+
+
 def sort_boxes(boxes):
     return sorted(boxes, key=lambda box: (np.min(box[:, 1]), np.min(box[:, 0])))
 
@@ -275,8 +281,10 @@ def main():
     if image is None:
         raise FileNotFoundError(args.image)
 
-    det_session = ort.InferenceSession(args.det_model, providers=["CPUExecutionProvider"])
-    rec_session = ort.InferenceSession(args.rec_model, providers=["CPUExecutionProvider"])
+    providers = get_onnx_providers()
+    print(f"ONNX Runtime providers: {providers}", flush=True)
+    det_session = ort.InferenceSession(args.det_model, providers=providers)
+    rec_session = ort.InferenceSession(args.rec_model, providers=providers)
     characters = load_character_list(args.rec_yml)
 
     boxes, _ = detect_text_boxes(
