@@ -1,0 +1,12 @@
+# Local credentials and service account keys
+*firebase-adminsdk*.json
+*service-account*.json
+*service_account*.json
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Local environment files
+.env
+.env.*

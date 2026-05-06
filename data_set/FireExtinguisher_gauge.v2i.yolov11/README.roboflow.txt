@@ -1,8 +1,8 @@
 
-FireExtinguisher - v2 2026-03-04 9:47pm
+FireExtinguisher - v3 2026-05-06 3:11pm
 ==============================
 
-This dataset was exported via roboflow.com on March 4, 2026 at 1:17 PM GMT
+This dataset was exported via roboflow.com on May 6, 2026 at 3:31 PM GMT
 
 Roboflow is an end-to-end computer vision platform that helps you
 * collaborate with your team on computer vision projects
@@ -17,7 +17,7 @@ visit https://github.com/roboflow/notebooks
 
 To find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com
 
-The dataset includes 224 images.
+The dataset includes 368 images.
 Objects are annotated in YOLOv11 format.
 
 The following pre-processing was applied to each image:
