@@ -266,7 +266,7 @@ def resize_for_display(image, scale):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--image", default="capture/label_crop.jpg")
+    parser.add_argument("--image", default="capture/Real_Environment/label/camera1_label_20260507_011413_1.jpg")
     parser.add_argument("--det-model", default="onnx_models/PP-OCRv5_server_det/inference.onnx")
     parser.add_argument("--rec-model", default="onnx_models/korean_PP-OCRv5_mobile_rec/inference.onnx")
     parser.add_argument("--rec-yml", default="onnx_models/korean_PP-OCRv5_mobile_rec/inference.yml")
