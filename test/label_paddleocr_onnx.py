@@ -2,7 +2,9 @@ import argparse
 import math
 import re
 import unicodedata
+from datetime import datetime
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import cv2
 import numpy as np
@@ -31,6 +33,21 @@ def extract_expiry(text):
         if 1 <= month <= 12:
             return f"{int(year):04d}-{month:02d}"
     return None
+
+
+def get_korea_today():
+    return datetime.now(ZoneInfo("Asia/Seoul")).date()
+
+
+def judge_expiry_status(expiry, today=None):
+    if not expiry:
+        return "판정불가"
+
+    year, month = map(int, expiry.split("-"))
+    today = today or get_korea_today()
+    if (year, month) < (today.year, today.month):
+        return "비정상"
+    return "정상"
 
 
 def resize_det_image(image, resize_long=960):
@@ -258,6 +275,28 @@ def draw_results(image, rows):
     return output
 
 
+def draw_summary_ui(image, today, expiry, status):
+    panel_h = 96
+    min_width = 720
+    right_pad = max(0, min_width - image.shape[1])
+    output = cv2.copyMakeBorder(image, panel_h, 0, 0, right_pad, cv2.BORDER_CONSTANT, value=(245, 245, 245))
+    status_text = {
+        "정상": "NORMAL",
+        "비정상": "EXPIRED",
+        "판정불가": "UNKNOWN",
+    }.get(status, "UNKNOWN")
+    status_color = {
+        "정상": (35, 145, 60),
+        "비정상": (30, 30, 220),
+        "판정불가": (80, 80, 80),
+    }.get(status, (80, 80, 80))
+
+    cv2.putText(output, f"Today(KST): {today.isoformat()}", (18, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (30, 30, 30), 2)
+    cv2.putText(output, f"Extinguisher expiry: {expiry if expiry else 'not found'}", (18, 62), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (30, 30, 30), 2)
+    cv2.putText(output, f"Status: {status_text}", (18, 91), cv2.FONT_HERSHEY_SIMPLEX, 0.75, status_color, 2)
+    return output
+
+
 def resize_for_display(image, scale):
     if scale == 1.0:
         return image
@@ -299,6 +338,8 @@ def main():
     rows = [(box, text, score) for box, (text, score) in zip(boxes, rec_rows) if text.strip()]
     full_text = " ".join(text for _, text, _ in rows)
     expiry = extract_expiry(full_text)
+    today = get_korea_today()
+    status = judge_expiry_status(expiry, today)
 
     print("=== ONNX OCR detected text ===", flush=True)
     print(
@@ -314,10 +355,18 @@ def main():
     print(full_text if full_text else "not found", flush=True)
     print("=== Extracted expiry ===", flush=True)
     print(expiry if expiry else "not found", flush=True)
+    print("=== Current date (KST) ===", flush=True)
+    print(today.isoformat(), flush=True)
+    print("=== Expiry status ===", flush=True)
+    print(status, flush=True)
 
     if not args.no_show:
         output = draw_results(image, rows)
-        cv2.imshow("onnx ocr result", resize_for_display(output, args.display_scale))
+        output = draw_summary_ui(output, today, expiry, status)
+        display = resize_for_display(output, args.display_scale)
+        cv2.namedWindow("onnx ocr result", cv2.WINDOW_NORMAL)
+        cv2.resizeWindow("onnx ocr result", display.shape[1], display.shape[0])
+        cv2.imshow("onnx ocr result", display)
         print("이미지 창을 닫으려면 아무 키나 누르세요.", flush=True)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
