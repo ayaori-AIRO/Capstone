@@ -3,9 +3,11 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import random
 import datetime
+from pathlib import Path
 
 # Firebase 인증
-cred = credentials.Certificate("react-test-542ec-firebase-adminsdk-fbsvc-66cefbc805.json")
+BASE_DIR = Path(__file__).resolve().parent
+cred = credentials.Certificate(BASE_DIR / "react-test-542ec-firebase-adminsdk-fbsvc-66cefbc805.json")
 firebase_admin.initialize_app(cred)
 
 # Firestore 연결
