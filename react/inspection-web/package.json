@@ -14,10 +14,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "PATH=../../.node-v22/bin:$PATH react-scripts start",
+    "build": "PATH=../../.node-v22/bin:$PATH react-scripts build",
+    "test": "PATH=../../.node-v22/bin:$PATH react-scripts test",
+    "eject": "PATH=../../.node-v22/bin:$PATH react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

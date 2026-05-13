@@ -10,3 +10,6 @@ __pycache__/
 # Local environment files
 .env
 .env.*
+
+# Local Node.js runtime for inspection-web
+.node-v22/
