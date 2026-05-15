@@ -447,17 +447,143 @@ h1 {
 }
 
 .calendar-photo-box {
-  width: 520px;
-  height: 190px;
+  width: 420px;
+  height: 165px;
   border: 1px solid #d8dde5;
   border-radius: 8px;
   background: #111827;
   color: #f3f5f7;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 13px;
   font-weight: 700;
+  overflow: hidden;
+  padding: 0;
+}
+
+.calendar-photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.photo-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: rgba(17, 24, 39, 0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+}
+
+.photo-modal {
+  position: relative;
+  max-width: 86vw;
+  max-height: 86vh;
+  padding: 42px 18px 18px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+  overflow: auto;
+}
+
+.photo-modal img {
+  width: min(82vw, 720px);
+  height: min(76vh, 720px);
+  object-fit: contain;
+  display: block;
+  transform-origin: center;
+  transition: transform 0.15s ease;
+  cursor: grab;
+  user-select: none;
+}
+
+.photo-modal img.dragging {
+  cursor: grabbing;
+}
+
+.photo-modal-controls {
+  position: absolute;
+  top: 12px;
+  right: 48px;
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+}
+
+.photo-modal-control,
+.photo-modal-close {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: #e3e5e8;
+  color: #333;
+  cursor: pointer;
+  padding: 0;
+}
+
+.photo-modal-control {
+  position: relative;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 700;
+}
+
+.photo-modal-fullscreen::before,
+.photo-modal-fullscreen::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid #333;
+  border-radius: 2px;
+  background: transparent;
+}
+
+.photo-modal-fullscreen::before {
+  top: 7px;
+  left: 9px;
+}
+
+.photo-modal-fullscreen::after {
+  top: 9px;
+  left: 7px;
+}
+
+.photo-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  z-index: 3;
+}
+
+.photo-modal-close::before,
+.photo-modal-close::after {
+  content: "";
+  position: absolute;
+  top: 11px;
+  left: 5px;
+  width: 12px;
+  height: 2px;
+  background: #333;
+}
+
+.photo-modal-close::before {
+  transform: rotate(45deg);
+}
+
+.photo-modal-close::after {
+  transform: rotate(-45deg);
+}
+
+.photo-modal-control:hover,
+.photo-modal-close:hover {
+  background: #e6e9ee;
 }
 
 .monthly-result-section {
@@ -599,6 +725,42 @@ h1 {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
+  table-layout: fixed;
+}
+
+.inspection-table-header {
+  width: 100%;
+}
+
+.inspection-table-body-scroll {
+  max-height: 458px;
+  overflow-y: auto;
+}
+
+.inspection-col-no {
+  width: 6%;
+}
+
+.inspection-col-id {
+  width: 31%;
+}
+
+.inspection-col-location,
+.inspection-col-pressure,
+.inspection-col-appearance {
+  width: 7%;
+}
+
+.inspection-col-expiry {
+  width: 11%;
+}
+
+.inspection-col-result {
+  width: 9%;
+}
+
+.inspection-col-time {
+  width: 22%;
 }
 
 .inspection-table th,

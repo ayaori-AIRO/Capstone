@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "./firebase";
 import "./App.css";
@@ -18,6 +18,11 @@ function App() {
   const [filterExtinguisher, setFilterExtinguisher] = useState("all");
   const [appliedFilter, setAppliedFilter] = useState(null);
   const [selectedPhotoRecordId, setSelectedPhotoRecordId] = useState("");
+  const [expandedPhoto, setExpandedPhoto] = useState(null);
+  const [photoZoom, setPhotoZoom] = useState(1);
+  const [photoPosition, setPhotoPosition] = useState({ x: 0, y: 0 });
+  const [photoDrag, setPhotoDrag] = useState(null);
+  const photoModalRef = useRef(null);
   const extinguisherNames = [
     "ID:1 (B1F 복도 A)",
     "ID:2 B1F 복도B",
@@ -160,6 +165,7 @@ function App() {
           flexDirection: "column",
           width: "140px",
           height: "100%",
+          marginTop: "32px",
           justifyContent: "space-between"
         }}
       >
@@ -350,9 +356,63 @@ function App() {
                     : "소화기 ID를 선택하면 해당 날짜 사진이 표시됩니다"}
                 </div>
                 <div className="calendar-photo-stack">
-                  <div className="calendar-photo-box">게이지 사진</div>
-                  <div className="calendar-photo-box">부식 사진</div>
-                  <div className="calendar-photo-box">라벨 사진</div>
+                  <button
+                    className="calendar-photo-box"
+                    type="button"
+                    onClick={() =>
+                      {
+                      setPhotoZoom(1);
+                      setPhotoPosition({ x: 0, y: 0 });
+                      setExpandedPhoto({
+                        src: "/inspection-images/camera1_pressure_gauge_20260507_011409_1.jpg",
+                        alt: "게이지 사진",
+                      });
+                    }
+                    }
+                  >
+                    <img
+                      src="/inspection-images/camera1_pressure_gauge_20260507_011409_1.jpg"
+                      alt="게이지 사진"
+                    />
+                  </button>
+                  <button
+                    className="calendar-photo-box"
+                    type="button"
+                    onClick={() =>
+                      {
+                      setPhotoZoom(1);
+                      setPhotoPosition({ x: 0, y: 0 });
+                      setExpandedPhoto({
+                        src: "/inspection-images/corrosion_2.png",
+                        alt: "부식 사진",
+                      });
+                    }
+                    }
+                  >
+                    <img
+                      src="/inspection-images/corrosion_2.png"
+                      alt="부식 사진"
+                    />
+                  </button>
+                  <button
+                    className="calendar-photo-box"
+                    type="button"
+                    onClick={() =>
+                      {
+                      setPhotoZoom(1);
+                      setPhotoPosition({ x: 0, y: 0 });
+                      setExpandedPhoto({
+                        src: "/inspection-images/camera1_label_20260507_011413_1.jpg",
+                        alt: "라벨 사진",
+                      });
+                    }
+                    }
+                  >
+                    <img
+                      src="/inspection-images/camera1_label_20260507_011413_1.jpg"
+                      alt="라벨 사진"
+                    />
+                  </button>
                 </div>
               </div>
 
@@ -445,7 +505,17 @@ function App() {
                 </div>
                 <h2>검사 결과</h2>
 
-                <table className="inspection-table">
+                <table className="inspection-table inspection-table-header">
+                  <colgroup>
+                    <col className="inspection-col-no" />
+                    <col className="inspection-col-id" />
+                    <col className="inspection-col-location" />
+                    <col className="inspection-col-pressure" />
+                    <col className="inspection-col-appearance" />
+                    <col className="inspection-col-expiry" />
+                    <col className="inspection-col-result" />
+                    <col className="inspection-col-time" />
+                  </colgroup>
                   <thead>
                     <tr>
                       <th>No</th>
@@ -458,7 +528,20 @@ function App() {
                       <th>시간</th>
                     </tr>
                   </thead>
+                </table>
 
+                <div className="inspection-table-body-scroll">
+                  <table className="inspection-table inspection-table-body">
+                    <colgroup>
+                      <col className="inspection-col-no" />
+                      <col className="inspection-col-id" />
+                      <col className="inspection-col-location" />
+                      <col className="inspection-col-pressure" />
+                      <col className="inspection-col-appearance" />
+                      <col className="inspection-col-expiry" />
+                      <col className="inspection-col-result" />
+                      <col className="inspection-col-time" />
+                    </colgroup>
                   <tbody>
                     {filteredRecords.map((item, index) => (
                       <tr key={item.id}>
@@ -494,7 +577,8 @@ function App() {
                       </tr>
                     )}
                   </tbody>
-                </table>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
@@ -545,6 +629,83 @@ function App() {
 
         </div>
       </div>
+      {expandedPhoto && (
+        <div className="photo-modal-backdrop" onClick={() => setExpandedPhoto(null)}>
+          <div
+            className="photo-modal"
+            ref={photoModalRef}
+            onClick={(event) => event.stopPropagation()}
+            onMouseMove={(event) => {
+              if (!photoDrag) {
+                return;
+              }
+
+              setPhotoPosition({
+                x: event.clientX - photoDrag.startX,
+                y: event.clientY - photoDrag.startY,
+              });
+            }}
+            onMouseUp={() => setPhotoDrag(null)}
+            onMouseLeave={() => setPhotoDrag(null)}
+            onWheel={(event) => {
+              event.preventDefault();
+              setPhotoZoom((zoom) => {
+                const nextZoom = event.deltaY < 0 ? zoom + 0.15 : zoom - 0.15;
+                return Math.min(3, Math.max(0.5, nextZoom));
+              });
+            }}
+          >
+            <div className="photo-modal-controls">
+              <button
+                className="photo-modal-control"
+                type="button"
+                aria-label="전체화면 종료"
+                onClick={() => {
+                  if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                  }
+                }}
+              >
+                -
+              </button>
+              <button
+                className="photo-modal-control photo-modal-fullscreen"
+                type="button"
+                aria-label="전체화면"
+                onClick={() => {
+                  if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                    return;
+                  }
+
+                  photoModalRef.current?.requestFullscreen();
+                }}
+              />
+            </div>
+            <button
+              className="photo-modal-close"
+              type="button"
+              aria-label="확대 사진 닫기"
+              onClick={() => setExpandedPhoto(null)}
+            />
+            <img
+              src={expandedPhoto.src}
+              alt={expandedPhoto.alt}
+              className={photoDrag ? "dragging" : ""}
+              onMouseDown={(event) => {
+                event.preventDefault();
+                setPhotoDrag({
+                  startX: event.clientX - photoPosition.x,
+                  startY: event.clientY - photoPosition.y,
+                });
+              }}
+              style={{
+                transform: `translate(${photoPosition.x}px, ${photoPosition.y}px) scale(${photoZoom})`,
+              }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
