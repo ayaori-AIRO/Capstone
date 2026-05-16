@@ -137,13 +137,21 @@ function App() {
             <div className="live-camera-card">
               <div className="live-camera-title">소화기 검사 카메라1</div>
               <div className="live-view">
-                <div>Not Connected</div>
+                <img
+                  className="live-stream"
+                  src="http://localhost:8000/video/camera1"
+                  alt="소화기 검사 카메라1"
+                />
               </div>
             </div>
             <div className="live-camera-card">
               <div className="live-camera-title">소화기 검사 카메라2</div>
               <div className="live-view">
-                <div>Not Connected</div>
+                <img
+                  className="live-stream"
+                  src="http://localhost:8000/video/camera2"
+                  alt="소화기 검사 카메라2"
+                />
               </div>
             </div>
           </div>
