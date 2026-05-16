@@ -1,3 +1,6 @@
+# cd Capstone/
+# python3 project/Object_Detection_Live.py 
+
 import cv2
 import json
 import os
