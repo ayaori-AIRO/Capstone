@@ -731,16 +731,13 @@ h1 {
 
 .inspection-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 14px;
   table-layout: fixed;
 }
 
-.inspection-table-header {
-  width: 100%;
-}
-
-.inspection-table-body-scroll {
+.inspection-table-scroll {
   max-height: 458px;
   overflow-y: auto;
 }
@@ -780,6 +777,9 @@ h1 {
 }
 
 .inspection-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
   background-color: #2f4050;
   color: white;
 }

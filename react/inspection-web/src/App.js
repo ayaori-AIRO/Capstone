@@ -513,33 +513,8 @@ function App() {
                 </div>
                 <h2>검사 결과</h2>
 
-                <table className="inspection-table inspection-table-header">
-                  <colgroup>
-                    <col className="inspection-col-no" />
-                    <col className="inspection-col-id" />
-                    <col className="inspection-col-location" />
-                    <col className="inspection-col-pressure" />
-                    <col className="inspection-col-appearance" />
-                    <col className="inspection-col-expiry" />
-                    <col className="inspection-col-result" />
-                    <col className="inspection-col-time" />
-                  </colgroup>
-                  <thead>
-                    <tr>
-                      <th>No</th>
-                      <th>소화기 ID</th>
-                      <th>위치</th>
-                      <th>압력</th>
-                      <th>외관</th>
-                      <th>내용연한</th>
-                      <th>결과</th>
-                      <th>시간</th>
-                    </tr>
-                  </thead>
-                </table>
-
-                <div className="inspection-table-body-scroll">
-                  <table className="inspection-table inspection-table-body">
+                <div className="inspection-table-scroll">
+                  <table className="inspection-table">
                     <colgroup>
                       <col className="inspection-col-no" />
                       <col className="inspection-col-id" />
@@ -550,41 +525,53 @@ function App() {
                       <col className="inspection-col-result" />
                       <col className="inspection-col-time" />
                     </colgroup>
-                  <tbody>
-                    {filteredRecords.map((item, index) => (
-                      <tr key={item.id}>
-                        <td>{index + 1}</td>
-                        <td>
-                          <button
-                            className="inspection-id-button"
-                            type="button"
-                            onClick={() => setSelectedPhotoRecordId(item.id)}
-                          >
-                            {getExtinguisherName(item, index)}
-                          </button>
-                        </td>
-                        <td>B1F</td>
-                        <td>{item.pressure === "normal" ? "정상" : "낮음"}</td>
-                        <td>{item.appearance === "clean" ? "양호" : "오염"}</td>
-                        <td>{item.expiry || "2028:05"}</td>
-                        <td
-                          className={
-                            item.result === "pass"
-                              ? "result-pass"
-                              : "result-fail"
-                          }
-                        >
-                          {item.result === "pass" ? "합격" : "불합격"}
-                        </td>
-                        <td>{formatInspectionTime(item)}</td>
-                      </tr>
-                    ))}
-                    {filteredRecords.length === 0 && (
+                    <thead>
                       <tr>
-                        <td colSpan="8">선택한 기간에 검사 기록이 없습니다.</td>
+                        <th>No</th>
+                        <th>소화기 ID</th>
+                        <th>위치</th>
+                        <th>압력</th>
+                        <th>외관</th>
+                        <th>내용연한</th>
+                        <th>결과</th>
+                        <th>시간</th>
                       </tr>
-                    )}
-                  </tbody>
+                    </thead>
+                    <tbody>
+                      {filteredRecords.map((item, index) => (
+                        <tr key={item.id}>
+                          <td>{index + 1}</td>
+                          <td>
+                            <button
+                              className="inspection-id-button"
+                              type="button"
+                              onClick={() => setSelectedPhotoRecordId(item.id)}
+                            >
+                              {getExtinguisherName(item, index)}
+                            </button>
+                          </td>
+                          <td>B1F</td>
+                          <td>{item.pressure === "normal" ? "정상" : "낮음"}</td>
+                          <td>{item.appearance === "clean" ? "양호" : "오염"}</td>
+                          <td>{item.expiry || "2028:05"}</td>
+                          <td
+                            className={
+                              item.result === "pass"
+                                ? "result-pass"
+                                : "result-fail"
+                            }
+                          >
+                            {item.result === "pass" ? "합격" : "불합격"}
+                          </td>
+                          <td>{formatInspectionTime(item)}</td>
+                        </tr>
+                      ))}
+                      {filteredRecords.length === 0 && (
+                        <tr>
+                          <td colSpan="8">선택한 기간에 검사 기록이 없습니다.</td>
+                        </tr>
+                      )}
+                    </tbody>
                   </table>
                 </div>
               </div>
